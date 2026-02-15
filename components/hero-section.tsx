@@ -20,7 +20,7 @@ export function HeroSection() {
           style={{ animationDelay: "100ms" }}
         >
           The Pulse of Student Life{" "}
-          <span className="text-primary">in Tunisia.</span>
+          <span className="text-primary">in Africa.</span>
         </h1>
 
         <p
