@@ -1,8 +1,41 @@
 "use client"
 
-import { TypeAnimation } from 'react-type-animation'
+import { useState, useEffect } from 'react'
 
 export function HeroSection() {
+  const [displayText, setDisplayText] = useState('')
+  const [countryIndex, setCountryIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  
+  const countries = ['Tunisia', 'Algeria', 'Morocco']
+  
+  useEffect(() => {
+    const currentCountry = countries[countryIndex]
+    
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        if (displayText.length < currentCountry.length) {
+          setDisplayText(currentCountry.slice(0, displayText.length + 1))
+        } else {
+          // Pause before deleting
+          setTimeout(() => setIsDeleting(true), 2000)
+        }
+      } else {
+        // Deleting
+        if (displayText.length > 0) {
+          setDisplayText(displayText.slice(0, -1))
+        } else {
+          // Move to next country
+          setIsDeleting(false)
+          setCountryIndex((countryIndex + 1) % countries.length)
+        }
+      }
+    }, isDeleting ? 50 : 100)
+    
+    return () => clearTimeout(timeout)
+  }, [displayText, isDeleting, countryIndex])
+
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-32 lg:px-8">
       {/* Background glow */}
@@ -21,23 +54,8 @@ export function HeroSection() {
         >
           The Pulse of Student Life{" "}
           <span className="text-primary">
-            in{" "}
-            <TypeAnimation
-              sequence={[
-                'Tunisia',
-                2000, // Wait 2s before deleting
-                'Algeria',
-                2000,
-                'Morocco',
-                2000,
-              ]}
-              wrapper="span"
-              speed={50} // Typing speed
-              deletionSpeed={70} // Deleting speed
-              repeat={Infinity}
-              cursor={true}
-              style={{ display: 'inline-block' }}
-            />
+            in {displayText}
+            <span className="animate-pulse">|</span>
           </span>
         </h1>
         <p
