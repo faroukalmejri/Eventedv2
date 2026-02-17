@@ -7,7 +7,7 @@ export function HeroSection() {
   const [countryIndex, setCountryIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   
-  const countries = ['Tunisia', 'Algeria', 'Morocco']
+  const countries = ['Tunisia', 'Algeria', 'Libya']
   
   useEffect(() => {
     const currentCountry = countries[countryIndex]
